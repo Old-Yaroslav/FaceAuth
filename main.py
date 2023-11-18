@@ -55,15 +55,19 @@ class ObjectDetection:
                     matchIndex = np.argmin(faceDis)
 
                     if matches[matchIndex]:
-                        cv2.putText(operatorMenu, 'Yaroslav Detected', (50, 50),
+                        cv2.putText(operatorMenu, 'Person Detected', (50, 50),
                                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
                         y1, x2, y2, x1 = faceLoc
                         y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                        bbox = 55 + x1, 162 + y1, x2 - x1, y2 - y1
+                        bbox = x1, y1, x2 - x1, y2 - y1
                         cvzone.cornerRect(frame, bbox, rt=0)
                     else:
-                        cv2.putText(operatorMenu, 'FoOther persons', (50, 50),
+                        cv2.putText(operatorMenu, 'Auth denied', (50, 50),
                                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                        y1, x2, y2, x1 = faceLoc
+                        y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+                        bbox = x1, y1, x2 - x1, y2 - y1
+                        cvzone.cornerRect(frame, bbox, rt=0)
 
             imgStacked = cvzone.stackImages([frame, operatorMenu], 2, 1)
 
